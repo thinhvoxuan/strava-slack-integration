@@ -1,0 +1,26 @@
+settings:
+  legacy:
+    force: false
+    interval: 1s
+server:
+  status: false
+  open: false
+  host: localhost
+  port: 5001
+schema:
+- name: i-eat
+  path: .
+  commands: 
+    install:
+      status: true
+    run: 
+      status: true
+  watcher:
+    extensions:
+    - go
+    paths:
+    - /
+    ignored_paths:
+    - .git
+    - .realize
+    - vendor

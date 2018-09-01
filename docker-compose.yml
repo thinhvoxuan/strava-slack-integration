@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+  app:
+    build: 
+      context: ./docker/app
+    volumes:
+      - ./slack-bot:/go/src/go-with-compose
+    depends_on:
+      - db
+    links:
+      - db
+    working_dir: /go/src/go-with-compose
