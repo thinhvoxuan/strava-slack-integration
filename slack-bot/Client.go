@@ -115,7 +115,7 @@ func WorklogDetail(fromDate string, toDate string, projectAlias string) (summary
 	for _, user := range sUser {
 		summary += fmt.Sprintf("*@%s:* %.2fh\n", user.UserAlias, user.totalWorklog())
 		for _, log := range user.Worklog {
-			summary += fmt.Sprintf("\t+ %.2fh: @%s\n", log.Hours, log.LogMessage)
+			summary += fmt.Sprintf("\t+ %.2fh: %s\n", log.Hours, log.LogMessage)
 		}
 		summary += fmt.Sprintf("\n")
 	}

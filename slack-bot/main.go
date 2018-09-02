@@ -64,14 +64,14 @@ func initBot() {
 		response.Reply(result)
 	})
 
-	// bot.Command("Log detail <project_alias> <time>", "Worklog `hyperloop` `last-week|this-week|yesterday|today|dd-mm-yyyy~dd-mm-yyyy`", func(request slacker.Request, response slacker.ResponseWriter) {
-	// 	response.Typing()
-	// 	projectAlias := request.StringParam("project_alias", "")
-	// 	time := request.StringParam("time", "today")
-	// 	fromDate, toDate := parseTime(time)
-	// 	result := WorklogDetail(fromDate, toDate, projectAlias)
-	// 	response.Reply(result)
-	// })
+	bot.Command("Log detail <project_alias> <time>", "Worklog `hyperloop` `last-week|this-week|yesterday|today|dd-mm-yyyy~dd-mm-yyyy`", func(request slacker.Request, response slacker.ResponseWriter) {
+		response.Typing()
+		projectAlias := request.StringParam("project_alias", "")
+		time := request.StringParam("time", "today")
+		fromDate, toDate := parseTime(time)
+		result := WorklogDetail(fromDate, toDate, projectAlias)
+		response.Reply(result)
+	})
 
 	log.Println("Complete loading")
 	ctx, cancel := context.WithCancel(context.Background())
