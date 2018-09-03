@@ -3,19 +3,19 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:c0f51455e66824c4bba5a9f7b75fdc9f0ea2927ad9d85603600bfc8096cc44f5"
-  name = "github.com/go-shadow/moment"
+  digest = "1:e95c8ee2ac122e3b55a7bef845c4c65bbd240685da1dbb48aee2d6854e16c758"
+  name = "github.com/alecthomas/log4go"
   packages = ["."]
   pruneopts = "UT"
-  revision = "e837f27dad940099161770eb6841003d0f177ba2"
+  revision = "d146e6b86faab5f7e4d135cc63b749d74bf0d4a6"
 
 [[projects]]
-  digest = "1:cee8e8ac80df6373e7daa11baf1f98c1b6f7242c49ccae7e1ec34a971dc408d9"
+  digest = "1:7b5c6e2eeaa9ae5907c391a91c132abfd5c9e8a784a341b5625e750c67e6825d"
   name = "github.com/gorilla/websocket"
   packages = ["."]
   pruneopts = "UT"
-  revision = "3ff3320c2a1756a3691521efc290b4701575147c"
-  version = "v1.3.0"
+  revision = "66b9c49e59c6c48f0ffce28c2d8b8a5678502c6d"
+  version = "v1.4.0"
 
 [[projects]]
   digest = "1:70e697d67ccaec45e16bac3a32380ebcd9e7e071079c60d0171d42cf1cf9748a"
@@ -26,12 +26,52 @@
   version = "v1.2.0"
 
 [[projects]]
+  digest = "1:b0654f4992357c0494eadd434722dc67072bf81476784f47a048c58d1f9099a4"
+  name = "github.com/mattermost/mattermost-server"
+  packages = [
+    "model",
+    "utils/markdown",
+  ]
+  pruneopts = "UT"
+  revision = "416c7523c3097af6759b7c40075df51d44624672"
+  version = "v4.9.4"
+
+[[projects]]
+  digest = "1:07140002dbf37da92090f731b46fa47be4820b82fe5c14a035203b0e813d0ec2"
+  name = "github.com/nicksnyder/go-i18n"
+  packages = [
+    "i18n",
+    "i18n/bundle",
+    "i18n/language",
+    "i18n/translation",
+  ]
+  pruneopts = "UT"
+  revision = "0dc1626d56435e9d605a29875701721c54bc9bbd"
+  version = "v1.10.0"
+
+[[projects]]
   branch = "master"
   digest = "1:410e126b7e96640ac0c41bb49bad7dbf2d1c081aa06fd2c75cdb9e65765fae9b"
   name = "github.com/nlopes/slack"
   packages = ["."]
   pruneopts = "UT"
   revision = "7cfa5619e6becd3db5dfb8e26c06798918e123b2"
+
+[[projects]]
+  digest = "1:361de06aa7ae272616cbe71c3994a654cc6316324e30998e650f7765b20c5b33"
+  name = "github.com/pborman/uuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "e790cca94e6cc75c7064b1332e63811d4aae1a53"
+  version = "v1.1"
+
+[[projects]]
+  digest = "1:95741de3af260a92cc5c7f3f3061e85273f5a81b5db20d4bd68da74bd521675e"
+  name = "github.com/pelletier/go-toml"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "c01d1270ff3e442a8a57cddc1c92dc1138598194"
+  version = "v1.2.0"
 
 [[projects]]
   digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
@@ -64,6 +104,17 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "a446a9d74017c570301ba4a9db3bc775bcea7f97"
+
+[[projects]]
+  branch = "master"
+  digest = "1:1ecf2a49df33be51e757d0033d5d51d5f784f35f68e5a38f797b2d3f03357d71"
+  name = "golang.org/x/crypto"
+  packages = [
+    "bcrypt",
+    "blowfish",
+  ]
+  pruneopts = "UT"
+  revision = "182538f80094b6a8efaade63a8fd8e0d9d5843dd"
 
 [[projects]]
   branch = "master"
@@ -107,12 +158,20 @@
   revision = "d4920dcf5b7689548a6db640278a9b35a5b48ec6"
   version = "v1.9.1"
 
+[[projects]]
+  digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/go-shadow/moment",
     "github.com/joho/godotenv",
+    "github.com/mattermost/mattermost-server/model",
     "github.com/shomali11/slacker",
     "gopkg.in/resty.v1",
   ]

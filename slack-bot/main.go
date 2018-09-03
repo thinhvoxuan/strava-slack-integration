@@ -4,8 +4,6 @@ import (
 	"context"
 	"log"
 	"os"
-	"strings"
-	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/shomali11/slacker"
@@ -19,39 +17,7 @@ func handleError(err error) {
 
 const TIMEFORMAT = "02-01-2006"
 
-func startOfWeek() time.Time {
-	now := time.Now()
-	for now.Weekday() != time.Saturday {
-		now = now.AddDate(0, 0, -1)
-	}
-	return now
-}
-
-func parseTime(inputTime string) (fromDate string, toDate string) {
-	fromDate = time.Now().Format(TIMEFORMAT)
-	toDate = time.Now().AddDate(0, 0, 1).Format(TIMEFORMAT)
-
-	switch inputTime {
-	case "yesterday":
-		fromDate = time.Now().AddDate(0, 0, -1).Format(TIMEFORMAT)
-		toDate = time.Now().Format(TIMEFORMAT)
-	case "last-week":
-		fromDate = startOfWeek().AddDate(0, 0, -7).Format(TIMEFORMAT)
-		toDate = startOfWeek().Format(TIMEFORMAT)
-	case "this-week":
-		fromDate = startOfWeek().Format(TIMEFORMAT)
-		toDate = startOfWeek().AddDate(0, 0, 7).Format(TIMEFORMAT)
-	default:
-		dateRange := strings.Split(inputTime, "~")
-		if len(dateRange) == 2 {
-			fromDate = dateRange[0]
-			toDate = dateRange[1]
-		}
-	}
-	return
-}
-
-func initBot() {
+func initSlackBot() {
 	godotenv.Load()
 	bot := slacker.NewClient(os.Getenv("TOKEN"))
 
@@ -84,5 +50,6 @@ func initBot() {
 }
 
 func main() {
-	initBot()
+	// initSlackBot()
+	InitMatterMostBot()
 }
