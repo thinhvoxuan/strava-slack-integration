@@ -55,7 +55,7 @@ func initBot() {
 	godotenv.Load()
 	bot := slacker.NewClient(os.Getenv("TOKEN"))
 
-	bot.Command("Worklog <project_alias> <time>", "Worklog `hyperloop` `last-week|this-week|yesterday|today|dd-mm-yyyy~dd-mm-yyyy`", func(request slacker.Request, response slacker.ResponseWriter) {
+	bot.Command("Log summary <project_alias> <time>", "Worklog `hyperloop` `last-week|this-week|yesterday|today|dd-mm-yyyy~dd-mm-yyyy`", func(request slacker.Request, response slacker.ResponseWriter) {
 		response.Typing()
 		projectAlias := request.StringParam("project_alias", "")
 		time := request.StringParam("time", "today")
