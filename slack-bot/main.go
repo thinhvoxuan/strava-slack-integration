@@ -118,7 +118,6 @@ func getTimeFormat(time int32) (timeString string) {
 func getPaceNumber(summaryActivity stravaapi.SummaryActivity) (pace string) {
 	paceNumber := float32(summaryActivity.MovingTime) / (summaryActivity.Distance / 1000)
 	pace = getTimeFormat(int32(paceNumber))
-	fmt.Println(summaryActivity.Name, paceNumber, pace)
 	return
 }
 
