@@ -26,7 +26,7 @@ func findMyClubs() (result string) {
 
 	clubs, _, err := client.ClubsApi.GetLoggedInAthleteClubs(context, &stravaapi.GetLoggedInAthleteClubsOpts{
 		Page:    optional.NewInt32(1),
-		PerPage: optional.NewInt32(90),
+		PerPage: optional.NewInt32(100),
 	})
 
 	if err != nil {
@@ -58,7 +58,7 @@ func fetchClubsActivity(clubID int32, db *gorm.DB) (result string) {
 	client, context := initClient()
 	summaryActivities, _, err := client.ClubsApi.GetClubActivitiesById(context, clubID, &stravaapi.GetClubActivitiesByIdOpts{
 		Page:    optional.NewInt32(1),
-		PerPage: optional.NewInt32(20),
+		PerPage: optional.NewInt32(100),
 	})
 
 	if err != nil {
