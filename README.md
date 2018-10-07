@@ -1,2 +1,3 @@
-# mr kofi annan
-mr_kofi_annan
+# strava-slack-integration
+
+strava-slack-integration
