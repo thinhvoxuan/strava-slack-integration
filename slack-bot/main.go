@@ -123,7 +123,7 @@ func getPaceNumber(summaryActivity stravaapi.SummaryActivity) (pace string) {
 
 func getReport(summaryActivity stravaapi.SummaryActivity) (title string, text string) {
 	username := getUserName(summaryActivity)
-	title = fmt.Sprintf("%s - %s in %s\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
+	title = fmt.Sprintf("%s - %s - %s\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
 	text += fmt.Sprintf("*Distance:* %.2f KM\n", summaryActivity.Distance/1000)
 	text += fmt.Sprintf("*Time:* %s\n", getTimeFormat(summaryActivity.MovingTime))
 	text += fmt.Sprintf("*Pace:* %s\n", getPaceNumber(summaryActivity))
