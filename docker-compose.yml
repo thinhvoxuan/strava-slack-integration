@@ -6,6 +6,10 @@ services:
       context: ./docker/app
     volumes:
       - ./slack-bot:/go/src/go-with-compose
+    depends_on:
+      - db
+    links:
+      - db
     ports:
       - 32001:8080
     working_dir: /go/src/go-with-compose
