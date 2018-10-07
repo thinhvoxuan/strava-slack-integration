@@ -2,8 +2,27 @@ version: "2"
 
 services:
   app:
-    build: 
+    build:
       context: ./docker/app
     volumes:
       - ./slack-bot:/go/src/go-with-compose
+    ports:
+      - 32001:8080
     working_dir: /go/src/go-with-compose
+
+  db:
+    image: postgres
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql
+      - ./data/postgresql/data:/var/lib/postgresql/data
+    env_file:
+      - ./docker/app/variables.env
+
+  adminer:
+    image: adminer
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - 32002:8080
