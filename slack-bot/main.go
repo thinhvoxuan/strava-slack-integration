@@ -126,27 +126,27 @@ func getPaceNumber(summaryActivity stravaapi.SummaryActivity) (pace string) {
 // 	return fmt.Sprintf("%.2f", v);
 // }
 
-func getReport(summaryActivity stravaapi.SummaryActivity) (title string, text string) {
+func getReport(summaryActivity stravaapi.SummaryActivity) (text string) {
 	username := getUserName(summaryActivity)
-	title = ""
-	text = fmt.Sprintf("*%s - %s - %s*\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
-	text += fmt.Sprintf("%s duration\n", getTimeFormat(summaryActivity.MovingTime))
-	text += fmt.Sprintf("%.2f km/%s pace\n", summaryActivity.Distance/1000, getPaceNumber(summaryActivity))
-	text += fmt.Sprintf("%.2f ft/%.2f m climbed\n", summaryActivity.TotalElevationGain*3.2808399, summaryActivity.TotalElevationGain)
+	text = fmt.Sprintf("%s - %s - %s\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
+	text += fmt.Sprintf("`%s duration`\n", getTimeFormat(summaryActivity.MovingTime))
+	text += fmt.Sprintf("`%.2f km/%s pace`\n", summaryActivity.Distance/1000, getPaceNumber(summaryActivity))
+	text += fmt.Sprintf("`%.2f ft/%.2f m climbed`\n", summaryActivity.TotalElevationGain*3.2808399, summaryActivity.TotalElevationGain)
 	return
 }
 
 func pushToSlack(summaryActivity stravaapi.SummaryActivity) bool {
 	webhookURL := os.Getenv("SLACK_HOOK_URL")
-	title, text := getReport(summaryActivity)
+	text := getReport(summaryActivity)
 
-	authorName := "Strava API"
-	goodColor := "good"
-	attachment1 := slack.Attachment{Color: &goodColor, Text: &text, Title: &title, AuthorName: &authorName}
+	// authorName := "Strava API"
+	// goodColor := "good"
+	// attachment1 := slack.Attachment{Color: &goodColor, Text: &text, Title: &title, AuthorName: &authorName}
 	payload := slack.Payload{
-		Username:    "Strava Bot",
-		IconEmoji:   ":runner:",
-		Attachments: []slack.Attachment{attachment1},
+		Text:      text,
+		Username:  "Strava Bot",
+		IconEmoji: ":runner:",
+		// Attachments: []slack.Attachment{attachment1},
 	}
 	err := slack.Send(webhookURL, "", payload)
 	if len(err) > 0 {
