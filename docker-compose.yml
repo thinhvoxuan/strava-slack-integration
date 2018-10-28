@@ -15,7 +15,7 @@ services:
     working_dir: /go/src/go-with-compose
 
   db:
-    image: postgres
+    image: postgres:10
     volumes:
       - ./data/postgresql:/var/lib/postgresql
       - ./data/postgresql/data:/var/lib/postgresql/data

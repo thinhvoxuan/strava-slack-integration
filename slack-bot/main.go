@@ -128,11 +128,11 @@ func getPaceNumber(summaryActivity stravaapi.SummaryActivity) (pace string) {
 
 func getReport(summaryActivity stravaapi.SummaryActivity) (title string, text string) {
 	username := getUserName(summaryActivity)
-	title = fmt.Sprintf("%s - %s - %s\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
-	text += fmt.Sprintf("*Distance:* %.2f KM\n", summaryActivity.Distance/1000)
-	text += fmt.Sprintf("*Duration:* %s\n", getTimeFormat(summaryActivity.MovingTime))
-	text += fmt.Sprintf("*Pace:* %s\n", getPaceNumber(summaryActivity))
-	text += fmt.Sprintf("*Climbed:* %.2fm\n", summaryActivity.TotalElevationGain)
+	title = ""
+	text = fmt.Sprintf("*%s - %s - %s*\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
+	text += fmt.Sprintf("%s duration\n", getTimeFormat(summaryActivity.MovingTime))
+	text += fmt.Sprintf("%.2f km/%s pace\n", summaryActivity.Distance/1000, getPaceNumber(summaryActivity))
+	text += fmt.Sprintf("%.2f ft/%.2f m climbed\n", summaryActivity.TotalElevationGain*3.2808399, summaryActivity.TotalElevationGain)
 	return
 }
 
@@ -140,13 +140,10 @@ func pushToSlack(summaryActivity stravaapi.SummaryActivity) bool {
 	webhookURL := os.Getenv("SLACK_HOOK_URL")
 	title, text := getReport(summaryActivity)
 
-	// text := "*Distance:* 11.22 KM\n" + "*Time:* 01:12:40\n" + "*Pace:* 6:29\n" + "*Climbed:* 90.8m\n"
-	// title := "Hai Nhan L. - Morning Run"
 	authorName := "Strava API"
 	goodColor := "good"
 	attachment1 := slack.Attachment{Color: &goodColor, Text: &text, Title: &title, AuthorName: &authorName}
 	payload := slack.Payload{
-		// Text:        report,
 		Username:    "Strava Bot",
 		IconEmoji:   ":runner:",
 		Attachments: []slack.Attachment{attachment1},
