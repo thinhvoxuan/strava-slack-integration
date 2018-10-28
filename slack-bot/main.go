@@ -17,9 +17,17 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
+	"gopkg.in/resty.v1"
 
 	"github.com/thinhvoxuan/stravaapi"
 )
+
+type RefreshToken struct {
+	TokenType    string `json:"token_type"`
+	AccessToken  string `json:"access_token"`
+	ExpiresAt    int    `json:"expires_at"`
+	RefreshToken string `json:"refresh_token"`
+}
 
 func findMyClubs() (result string) {
 	client, context := initClient()
@@ -156,10 +164,32 @@ func pushToSlack(summaryActivity stravaapi.SummaryActivity) bool {
 	return true
 }
 
+func requestToken() (token string) {
+	params := map[string]string{
+		"client_id":     os.Getenv("CLIENT_ID"),
+		"client_secret": os.Getenv("CLIENT_SECRET"),
+		"refresh_token": os.Getenv("REFRESH_TOKEN"),
+		"grant_type":    "refresh_token",
+	}
+	refreshToken := RefreshToken{}
+	_, err := resty.R().SetQueryParams(params).SetResult(&refreshToken).Post("https://www.strava.com/oauth/token")
+
+	if err != nil {
+		fmt.Println("request token fail")
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("request token: " + refreshToken.AccessToken)
+	token = refreshToken.AccessToken
+	return
+}
+
 func initClient() (client *stravaapi.APIClient, auth context.Context) {
-	auth = context.WithValue(context.Background(), stravaapi.ContextAccessToken, os.Getenv("TOKEN"))
+	token := requestToken()
+	auth = context.WithValue(context.Background(), stravaapi.ContextAccessToken, token)
 	cfg := stravaapi.NewConfiguration()
 	client = stravaapi.NewAPIClient(cfg)
+
 	return client, auth
 }
 

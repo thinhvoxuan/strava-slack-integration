@@ -98,7 +98,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:33b9d71d1dde2106309484a388eb7ba53cd1f67014e34a71f7b3dbc20bd186e5"
+  digest = "1:ea6ed8fabeb1373bd53b9398248676eb52ec139c788450b316a078b5a06387a0"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -107,18 +107,18 @@
     "publicsuffix",
   ]
   pruneopts = "UT"
-  revision = "146acd28ed5894421fb5aac80ca93bc1b1f46f87"
+  revision = "9b4f9f5ad5197c79fd623a3638e70d8b26cef344"
 
 [[projects]]
   branch = "master"
-  digest = "1:28b360454e161aae382c007449bcb1296087b5b52b4f37623bba0f9f9d7207f4"
+  digest = "1:1bce229fad01cbad9bd00e70ca32afff25ac2cea3dd710d50f88c967c1c3df65"
   name = "golang.org/x/oauth2"
   packages = [
     ".",
     "internal",
   ]
   pruneopts = "UT"
-  revision = "c57b0facaced709681d9f90397429b9430a74754"
+  revision = "9dcd33a902f40452422c2367fefcb95b54f9f8f8"
 
 [[projects]]
   digest = "1:a2ab62866c75542dd18d2b069fec854577a20211d7c0ea6ae746072a1dccdd18"
@@ -159,6 +159,14 @@
   revision = "ae0ab99deb4dc413a2b4bd6c8bdd0eb67f1e4d06"
   version = "v1.2.0"
 
+[[projects]]
+  digest = "1:559e4b9d3613025c3b53aff0aa15f41ed6fa82c24cd06e56932b9f0df4ba9ebb"
+  name = "gopkg.in/resty.v1"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "92a651cff2687ad3083767fb04b6f53d258b546c"
+  version = "v1.10.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
@@ -169,6 +177,7 @@
     "github.com/jinzhu/gorm/dialects/postgres",
     "github.com/joho/godotenv",
     "github.com/thinhvoxuan/stravaapi",
+    "gopkg.in/resty.v1",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
