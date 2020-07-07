@@ -254,6 +254,7 @@ func initModel(db *gorm.DB) {
 }
 
 func main() {
+	time.Sleep(20 * time.Second)
 	godotenv.Load()
 	db, err := gorm.Open("postgres", "host=db user=postgres dbname=stravalog password=example sslmode=disable")
 	defer db.Close()

@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+  app:
+    image: strava-slack/backend:{{commit}}
+    volumes:
+      - ./slack-bot:/go/src/app
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - 32001:8080
+
+  db:
+    image: postgres:10
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql
+      - ./data/postgresql/data:/var/lib/postgresql/data
+    env_file:
+      - ./docker/app/variables.env
+
+  adminer:
+    image: adminer
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - 32002:8080

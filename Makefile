@@ -24,5 +24,11 @@ dep-status:
 dev-local: 
 	realize start
 
+deploy-production:
+	docker build -f Dockerfile -t strava-slack/backend:$$(git rev-parse --short HEAD) --force-rm --no-cache .
+	docker image prune -f --filter label=stage=builder
+	sed "s/{{commit}}/$$(git rev-parse --short HEAD)/g" app-template.yml > docker-compose-app.yml
+	docker-compose -f docker-compose-app.yml up -d --force-recreate  
+
 %:
 	@:
