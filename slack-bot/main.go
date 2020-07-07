@@ -123,38 +123,54 @@ func getTimeFormat(time int32) (timeString string) {
 	return
 }
 
-func getPaceNumber(summaryActivity stravaapi.SummaryActivity) (pace string) {
+func getPaceRunNumber(summaryActivity stravaapi.SummaryActivity) (pace string) {
 	paceNumber := float32(summaryActivity.MovingTime) / (summaryActivity.Distance / 1000)
 	pace = getTimeFormat(int32(paceNumber))
 	return
 }
 
-// func getVelocity(summaryActivity stravaapi.SummaryActivity) string {
-// 	v := (summaryActivity.Distance / 1000) / (float32(summaryActivity.MovingTime) / 3600)
-// 	return fmt.Sprintf("%.2f", v);
-// }
+func getPaceSwimNumber(summaryActivity stravaapi.SummaryActivity) (pace string) {
+	paceNumber := float32(summaryActivity.MovingTime) / (summaryActivity.Distance / 100)
+	pace = getTimeFormat(int32(paceNumber))
+	return
+}
+
+func getVelocity(summaryActivity stravaapi.SummaryActivity) string {
+	v := (summaryActivity.Distance / 1000) / (float32(summaryActivity.MovingTime) / 3600)
+	return fmt.Sprintf("%.2f", v)
+}
 
 func getReport(summaryActivity stravaapi.SummaryActivity) (text string) {
-	username := getUserName(summaryActivity)
-	text = fmt.Sprintf("%s - %s - %s\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
-	text += fmt.Sprintf("`%s duration`\n", getTimeFormat(summaryActivity.MovingTime))
-	text += fmt.Sprintf("`%.2f km/%s pace`\n", summaryActivity.Distance/1000, getPaceNumber(summaryActivity))
-	text += fmt.Sprintf("`%.2f ft/%.2f m climbed`\n", summaryActivity.TotalElevationGain*3.2808399, summaryActivity.TotalElevationGain)
+	switch *summaryActivity.Type_ {
+	case stravaapi.RIDE:
+		username := getUserName(summaryActivity)
+		text = fmt.Sprintf("%s - %s - %s\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
+		text += fmt.Sprintf("`%s duration`\n", getTimeFormat(summaryActivity.MovingTime))
+		text += fmt.Sprintf("`%.2f km/%s km/h speed`\n", summaryActivity.Distance/1000, getVelocity(summaryActivity))
+		text += fmt.Sprintf("`%.2f ft/%.2f m climbed`\n", summaryActivity.TotalElevationGain*3.2808399, summaryActivity.TotalElevationGain)
+	case stravaapi.SWIM:
+		username := getUserName(summaryActivity)
+		text = fmt.Sprintf("%s - %s - %s\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
+		text += fmt.Sprintf("`%s duration`\n", getTimeFormat(summaryActivity.MovingTime))
+		text += fmt.Sprintf("`%.0f m/%s pace`\n", summaryActivity.Distance, getPaceSwimNumber(summaryActivity))
+	default:
+		username := getUserName(summaryActivity)
+		text = fmt.Sprintf("%s - %s - %s\n", username, summaryActivity.Name, time.Now().Format("January 02 2006"))
+		text += fmt.Sprintf("`%s duration`\n", getTimeFormat(summaryActivity.MovingTime))
+		text += fmt.Sprintf("`%.2f km/%s pace`\n", summaryActivity.Distance/1000, getPaceRunNumber(summaryActivity))
+		text += fmt.Sprintf("`%.2f ft/%.2f m climbed`\n", summaryActivity.TotalElevationGain*3.2808399, summaryActivity.TotalElevationGain)
+	}
+
 	return
 }
 
 func pushToSlack(summaryActivity stravaapi.SummaryActivity) bool {
 	webhookURL := os.Getenv("SLACK_HOOK_URL")
 	text := getReport(summaryActivity)
-
-	// authorName := "Strava API"
-	// goodColor := "good"
-	// attachment1 := slack.Attachment{Color: &goodColor, Text: &text, Title: &title, AuthorName: &authorName}
 	payload := slack.Payload{
 		Text:      text,
 		Username:  "Strava Bot",
 		IconEmoji: ":runner:",
-		// Attachments: []slack.Attachment{attachment1},
 	}
 	err := slack.Send(webhookURL, "", payload)
 	if len(err) > 0 {
