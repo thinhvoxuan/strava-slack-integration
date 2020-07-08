@@ -10,7 +10,7 @@ services:
     links:
       - db
     ports:
-      - 32001:8080
+      - 33001:8080
 
   db:
     image: postgres:10
@@ -27,4 +27,4 @@ services:
     links:
       - db
     ports:
-      - 32002:8080
+      - 33002:8080

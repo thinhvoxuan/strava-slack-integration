@@ -11,7 +11,7 @@ services:
     links:
       - db
     ports:
-      - 32001:8080
+      - 33001:8080
     working_dir: /go/src/go-with-compose
 
   db:
@@ -29,4 +29,4 @@ services:
     links:
       - db
     ports:
-      - 32002:8080
+      - 33002:8080
